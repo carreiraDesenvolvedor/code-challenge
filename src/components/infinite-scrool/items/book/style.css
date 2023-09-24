@@ -1,0 +1,40 @@
+.infinite-scroll-book-item-container {
+  display: flex;
+  max-height: 100px;
+  height: 100%;
+  gap: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.infinite-scroll-book-item-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.infinite-scroll-book-item-img {
+  max-height: 75px;
+  height: 100%;
+}
+
+.infinite-scroll-book-item-img img {
+  max-width: 50px;
+  max-height: 75px;
+  object-fit: cover;
+}
+
+.infinite-scroll-book-item-content {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+}
+
+.infinite-scroll-book-item-content .book-title {
+  margin: 0px;
+}
+
+.infinite-scroll-book-item-content .book-authors {
+  color: gray;
+}
