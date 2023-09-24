@@ -12,7 +12,6 @@ describe('infinite loading test', () => {
         itemType={InfiniteScrollItemType.book}
         isLoading={true}
         list={[]}
-        fetchData={() => {}}
         loadingMessage="Fetching books..."
       />,
     );
@@ -30,7 +29,6 @@ describe('infinite loading test', () => {
         itemType={InfiniteScrollItemType.book}
         isLoading={false}
         list={[]}
-        fetchData={() => {}}
         loadingMessage="Fetching books..."
       />,
     );

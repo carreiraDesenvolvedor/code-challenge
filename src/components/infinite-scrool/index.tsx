@@ -8,6 +8,11 @@ import { IApiBookItem } from '../../api/books/list';
 import InfiniteScroolBookItem from './items/book';
 import Loading from '../loading';
 import './style.css';
+import { useContext } from 'react';
+import {
+  BookContext,
+  IBooksContext,
+} from '../../contexts/Books';
 export enum InfiniteScrollItemType {
   book = 'book',
 }
@@ -19,18 +24,22 @@ interface IItem {
 
 interface IInfiniteScroll extends IItem {
   isLoading: boolean;
-  fetchData: () => void;
   loadingMessage: string;
 }
 
 const InfiteScroll: FC<IInfiniteScroll> = ({
   itemType,
   isLoading,
-  fetchData,
   list,
   loadingMessage,
 }): ReactElement => {
+  const {
+    fetchData,
+    values: { request },
+  } = useContext(BookContext) as IBooksContext;
   const observerTarget = useRef(null);
+
+  console.log(request.isLoading);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -51,15 +60,14 @@ const InfiteScroll: FC<IInfiniteScroll> = ({
         observer.unobserve(observerTarget.current);
       }
     };
-  }, [observerTarget]);
+  }, [observerTarget, request.page]);
 
   return (
     <div className="infinite-scroll-container">
       <div>{getElementByItemType({ itemType, list })}</div>
+      <Loading enabled={true} message={loadingMessage} />
+
       <div ref={observerTarget}></div>
-      {isLoading && (
-        <Loading enabled={true} message={loadingMessage} />
-      )}
     </div>
   );
 };
