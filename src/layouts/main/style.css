@@ -1,0 +1,14 @@
+.layout-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: white;
+}
+
+.layout-content {
+  max-width: 500px;
+  width: 500px;
+  min-height: 500px;
+  border: 1px solid gray;
+}
