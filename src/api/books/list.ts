@@ -5,10 +5,20 @@ import {
   apiRequest,
 } from '../sendApiRequest';
 
-export interface IApiBooksListResponse {
+export interface IApiBookItem {
+  id: number;
   title: string;
+  formats: {
+    'image/jpeg': string;
+  };
+  authors: {
+    name: string;
+  }[];
 }
-[];
+export interface IApiBooksListResponse {
+  count: number;
+  results: IApiBookItem[];
+}
 
 interface IApiBooksListRequest
   extends IApiRequestReponse<IApiBooksListResponse> {
