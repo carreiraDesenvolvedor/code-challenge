@@ -5,7 +5,10 @@ import {
   useState,
 } from 'react';
 import React, { ReactNode } from 'react';
-import { IApiBookItem } from '../api/books/list';
+import {
+  IApiBookItem,
+  apiBooksListRequest,
+} from '../api/books/list';
 
 interface IBooksContextRequest {
   page: number;
@@ -18,9 +21,10 @@ interface IBooksContextValues {
 }
 
 export interface IBooksContext {
-  values: IBooksContextRequest;
+  values: IBooksContextValues;
   setRequest: (request: IBooksContextRequest) => void;
   setSelectedBooks: (books: number[]) => void;
+  fetchData: () => void;
 }
 interface IBooksProvider {
   children: ReactNode;
@@ -44,13 +48,40 @@ const BooksProvider: FC<IBooksProvider> = ({
   const [booksValues, setBooksValues] =
     useState<IBooksContextValues>(emptyValues);
 
+  const setRequest = (request: IBooksContextRequest) => {
+    setBooksValues({ ...booksValues, request });
+  };
+
   const booksContextValues: IBooksContext = {
-    values: emptyValues,
-    setRequest: (request: IBooksContextRequest) => {
-      setBooksValues({ ...booksValues, request });
-    },
+    values: booksValues,
+    setRequest: setRequest,
     setSelectedBooks: (selectedBooks: number[]) => {
       setBooksValues({ ...booksValues, selectedBooks });
+    },
+    fetchData: () => {
+      if (booksValues.request.isLoading) return false;
+      console.log(booksValues.request);
+      setRequest({
+        ...booksValues.request,
+        isLoading: true,
+      });
+
+      apiBooksListRequest({
+        page: booksValues.request.page,
+        onSuccess: (response) => {
+          setRequest({
+            isLoading: false,
+            list: [
+              ...booksValues.request.list,
+              ...response.results,
+            ],
+            page: booksValues.request.page + 1,
+          });
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
     },
   };
 
