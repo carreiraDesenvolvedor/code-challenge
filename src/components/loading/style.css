@@ -1,0 +1,17 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+  right: 0px;
+}
+
+.loading-container-content {
+  color: white;
+  background-color: black;
+  font-weight: bold;
+  padding: 10px;
+}
