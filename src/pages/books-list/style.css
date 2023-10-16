@@ -1,22 +1,55 @@
 .book-list-container {
   display: flex;
   width: 100%;
-
   flex-direction: column;
 }
 
 .book-list-container-header {
   text-align: left;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid #B2BEB5;
   padding-left: 10px;
   padding-right: 10px;
   flex: 1;
 }
 
-.book-list-container-list {
+.book-list-container-counter {
+  text-align: left;
+  border-bottom: 1px solid #B2BEB5;
   padding-left: 10px;
   padding-right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.book-list-container-counter h3 {
+  margin: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.book-list-container-list {
   max-height: 500px;
   overflow: scroll;
   min-height: 500px;
+  overflow-x: hidden;
+}
+
+/* width */
+.book-list-container-list::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+.book-list-container-list::-webkit-scrollbar-track {
+  background: hsl(240deg 66.67% 97.65%); 
+  border-left: 1px solid hsl(240deg 7.69% 92.35%);
+}
+ 
+/* Handle */
+.book-list-container-list::-webkit-scrollbar-thumb {
+  background: hsl(60deg 5.33% 70.59%); 
+  max-height: 10px;
+  border-radius: 50px;
+  padding-left: 10px;
 }
