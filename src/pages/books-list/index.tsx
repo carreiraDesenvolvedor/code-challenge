@@ -8,11 +8,18 @@ import {
   BookContext,
   IBooksContext,
 } from '../../contexts/Books';
+import { BookSelectionContext, IBooksSelectionContext } from '../../contexts/BooksSelection';
 
 const BooksListPage: FC = (): ReactElement => {
   const {
     values: { request },
   } = useContext(BookContext) as IBooksContext;
+
+  const {
+    getTotal: getTotalBooksSelected,
+    clearSelection: clearBooksSelected
+  } = useContext(BookSelectionContext) as IBooksSelectionContext;
+
   return (
     <section
       className="book-list-container"
@@ -20,6 +27,12 @@ const BooksListPage: FC = (): ReactElement => {
     >
       <div className="book-list-container-header">
         <h1>Books</h1>
+      </div>
+      <div className='book-list-container-counter'>
+        <h3>{request.list.length}({getTotalBooksSelected()} selected)</h3>
+        <div>
+          <button disabled={getTotalBooksSelected() === 0} onClick={()=>clearBooksSelected()}>Clear Selection</button>
+        </div>
       </div>
       <div className="book-list-container-list">
         <InfiteScroll

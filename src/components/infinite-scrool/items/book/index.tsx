@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { IApiBookItem } from '../../../../api/books/list';
+import { BookSelectionContext, IBooksSelectionContext } from '../../../../contexts/BooksSelection';
 import './style.css';
 interface IInfiniteScroolBookItem {
   item: IApiBookItem;
@@ -8,10 +9,18 @@ interface IInfiniteScroolBookItem {
 const InfiniteScroolBookItem = ({
   item,
 }: IInfiniteScroolBookItem) => {
+  const {
+    handleSelection,
+    isBookSelected
+  } = useContext(BookSelectionContext) as IBooksSelectionContext;
   return (
     <div className="infinite-scroll-book-item-container">
       <div className="infinite-scroll-book-item-checkbox">
-        <input type="checkbox" />
+        <input type="checkbox" onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          handleSelection(item.id, event.target.checked);
+        }}
+        checked={isBookSelected(item.id)}
+        />
       </div>
       <div className="infinite-scroll-book-item-img">
         <img
