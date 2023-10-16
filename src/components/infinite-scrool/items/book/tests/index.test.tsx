@@ -1,9 +1,6 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '../../../../../test-utils/contexts/books-selection-provider-test';
 import InfiniteScroolBookItem from '..';
-import BooksSelectionProvider from '../../../../../contexts/BooksSelection';
-import userEvent from "@testing-library/user-event";
-
 
 describe('test book render', () => {
   test('is book item being rendered correctly for a book with 1 author', async () => {
@@ -17,8 +14,7 @@ describe('test book render', () => {
             'image/jpeg': 'aa',
           },
         }}
-      />,
-      {wrapper: BooksSelectionProvider}
+      />
     );
 
     //find images
@@ -53,8 +49,7 @@ describe('test book render', () => {
             'image/jpeg': 'aa',
           },
         }}
-      />,
-      {wrapper: BooksSelectionProvider}
+      />
     );
 
     //find images
@@ -87,8 +82,7 @@ describe('test book context selection', () => {
             'image/jpeg': 'aa',
           },
         }}
-      />,
-      {wrapper: BooksSelectionProvider}
+      />
     );
 
     //find images
