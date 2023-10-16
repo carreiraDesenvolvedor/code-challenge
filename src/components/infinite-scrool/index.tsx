@@ -1,8 +1,7 @@
 import React, {
   FC,
   ReactElement,
-  useRef,
-  useEffect,
+  useRef
 } from 'react';
 import { IApiBookItem } from '../../api/books/list';
 import InfiniteScroolBookItem from './items/book';
@@ -37,37 +36,31 @@ const InfiteScroll: FC<IInfiniteScroll> = ({
     fetchData,
     values: { request },
   } = useContext(BookContext) as IBooksContext;
-  const observerTarget = useRef(null);
+  const bottomList = useRef(null);
 
-  console.log(request.isLoading);
-
-  useEffect(() => {
+  React.useEffect(() => {
+    
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          fetchData();
-        }
+        if (entries[0]?.isIntersecting) fetchData();
       },
-      { threshold: 1 },
+      { threshold: 1 }
     );
-
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
+    
+    if (bottomList.current) {
+      observer.observe(bottomList.current);
     }
 
-    return () => {
-      if (observerTarget.current) {
-        observer.unobserve(observerTarget.current);
-      }
-    };
-  }, [observerTarget, request.page]);
+    return () => observer.disconnect();
+  }, [request.page]);
 
   return (
     <div className="infinite-scroll-container">
-      <div>{getElementByItemType({ itemType, list })}</div>
-      <Loading enabled={true} message={loadingMessage} />
-
-      <div ref={observerTarget}></div>
+      <div>
+        <div>{getElementByItemType({ itemType, list })}</div>
+        <div ref={bottomList}></div>
+      </div>
+      <Loading enabled={isLoading} message={loadingMessage} />
     </div>
   );
 };
