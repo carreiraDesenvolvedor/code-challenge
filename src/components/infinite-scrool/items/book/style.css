@@ -26,7 +26,7 @@
 .infinite-scroll-book-item-content {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   gap: 10px;
   text-align: left;
 }

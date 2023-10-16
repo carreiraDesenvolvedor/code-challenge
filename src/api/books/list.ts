@@ -1,6 +1,5 @@
 import { ApiEndpoints } from '../endpoints';
 import {
-  IApiRequest,
   IApiRequestReponse,
   apiRequest,
 } from '../sendApiRequest';

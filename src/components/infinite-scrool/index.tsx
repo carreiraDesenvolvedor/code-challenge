@@ -7,11 +7,6 @@ import { IApiBookItem } from '../../api/books/list';
 import InfiniteScroolBookItem from './items/book';
 import Loading from '../loading';
 import './style.css';
-import { useContext } from 'react';
-import {
-  BookContext,
-  IBooksContext,
-} from '../../contexts/Books';
 export enum InfiniteScrollItemType {
   book = 'book',
 }
