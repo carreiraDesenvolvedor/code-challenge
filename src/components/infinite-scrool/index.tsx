@@ -22,8 +22,10 @@ interface IItem {
 }
 
 interface IInfiniteScroll extends IItem {
+  fetchData: () => void;
   isLoading: boolean;
   loadingMessage: string;
+  currentPage: number;
 }
 
 const InfiteScroll: FC<IInfiniteScroll> = ({
@@ -31,11 +33,10 @@ const InfiteScroll: FC<IInfiniteScroll> = ({
   isLoading,
   list,
   loadingMessage,
+  fetchData,
+  currentPage
 }): ReactElement => {
-  const {
-    fetchData,
-    values: { request },
-  } = useContext(BookContext) as IBooksContext;
+  
   const bottomList = useRef(null);
 
   React.useEffect(() => {
@@ -52,7 +53,7 @@ const InfiteScroll: FC<IInfiniteScroll> = ({
     }
 
     return () => observer.disconnect();
-  }, [request.page]);
+  }, [currentPage]);
 
   return (
     <div className="infinite-scroll-container">

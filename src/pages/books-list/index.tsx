@@ -9,11 +9,30 @@ import {
   IBooksContext,
 } from '../../contexts/Books';
 import { BookSelectionContext, IBooksSelectionContext } from '../../contexts/BooksSelection';
+import { apiBooksListRequest } from '../../api/books/list';
 
 const BooksListPage: FC = (): ReactElement => {
+  
   const {
     values: { request },
+    setSuccessRequest,
+    setLoading
   } = useContext(BookContext) as IBooksContext;
+
+  const fetchBooks = () => {
+    if (request.isLoading) return false;
+    setLoading(true);
+
+    apiBooksListRequest({
+      page: request.page,
+      onSuccess: (response) => {
+        setSuccessRequest(response.results);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
+  };
 
   const {
     getTotal: getTotalBooksSelected,
@@ -36,6 +55,8 @@ const BooksListPage: FC = (): ReactElement => {
       </div>
       <div className="book-list-container-list">
         <InfiteScroll
+          currentPage={request.page}
+          fetchData={fetchBooks}
           itemType={InfiniteScrollItemType.book}
           isLoading={request.isLoading}
           list={request.list}

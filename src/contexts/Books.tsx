@@ -7,86 +7,63 @@ import {
 import React, { ReactNode } from 'react';
 import {
   IApiBookItem,
-  apiBooksListRequest,
 } from '../api/books/list';
 
-interface IBooksContextRequest {
+interface IStateRequest {
   page: number;
   isLoading: boolean;
   list: IApiBookItem[];
 }
-interface IBooksContextValues {
-  request: IBooksContextRequest;
-  selectedBooks: number[];
+interface IState {
+  request: IStateRequest;
 }
 
 export interface IBooksContext {
-  values: IBooksContextValues;
-  setRequest: (request: IBooksContextRequest) => void;
-  setSelectedBooks: (books: number[]) => void;
-  fetchData: () => void;
+  values: IState;
+  setSuccessRequest: (list: IApiBookItem[]) => void;
+  setLoading: (isLoading: boolean) => void;
 }
-interface IBooksProvider {
+interface IProvider {
   children: ReactNode;
 }
 
 export const BookContext: Context<IBooksContext | null> =
   createContext<IBooksContext | null>(null);
 
-const emptyValues: IBooksContextValues = {
+const emptyStateValues: IState = {
   request: {
     page: 1,
     isLoading: false,
     list: [],
   },
-  selectedBooks: [],
 };
 
-const BooksProvider: FC<IBooksProvider> = ({
+const BooksProvider: FC<IProvider> = ({
   children,
 }) => {
-  const [booksValues, setBooksValues] =
-    useState<IBooksContextValues>(emptyValues);
+  const [state, setState] =
+    useState<IState>(emptyStateValues);
 
-  const setRequest = (request: IBooksContextRequest) => {
-    setBooksValues({ ...booksValues, request });
-  };
-
-  const booksContextValues: IBooksContext = {
-    values: booksValues,
-    setRequest: setRequest,
-    setSelectedBooks: (selectedBooks: number[]) => {
-      setBooksValues({ ...booksValues, selectedBooks });
-    },
-    fetchData: () => {
-      if (booksValues.request.isLoading) return false;
-      console.log(booksValues.request);
-      setRequest({
-        ...booksValues.request,
-        isLoading: true,
-      });
-
-      apiBooksListRequest({
-        page: booksValues.request.page,
-        onSuccess: (response) => {
-          setRequest({
-            isLoading: false,
-            list: [
-              ...booksValues.request.list,
-              ...response.results,
-            ],
-            page: booksValues.request.page + 1,
-          });
-        },
-        onError: (error) => {
-          console.log(error);
-        },
+  const contextValue: IBooksContext = {
+    values: state,
+    setSuccessRequest: (newItems: IApiBookItem[]) => {
+      setState({
+        ...state,
+        request: {
+          isLoading: false,
+          list: [
+            ...state.request.list,
+            ...newItems,
+          ],
+          page: state.request.page + 1,
+      }
       });
     },
+    setLoading: (isLoading: boolean) => setState({...state, request: {...state.request, isLoading}})
   };
 
   return (
-    <BookContext.Provider value={booksContextValues}>
+    <BookContext.Provider value={contextValue}>
       {children}
     </BookContext.Provider>
   );
