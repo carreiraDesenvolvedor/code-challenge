@@ -3,6 +3,7 @@ import {
   FC,
   createContext,
   useState,
+  useContext,
 } from 'react';
 
 import React, { ReactNode } from 'react';
@@ -25,6 +26,14 @@ interface IBooksSelectionProvider {
 
 export const BookSelectionContext: Context<IBooksSelectionContext | null> =
   createContext<IBooksSelectionContext | null>(null);
+
+export const useBooksSelectionProvider = ():IBooksSelectionContext => {
+  const contextValue = useContext(BookSelectionContext) as IBooksSelectionContext;
+  if(!contextValue){
+    throw new Error('useBooksSelectionProvider must be called from within an BooksSelectionContextProvider');
+  }
+  return contextValue;
+}
 
 const emptyStateValues: IState = {
   selectedBooks: {}

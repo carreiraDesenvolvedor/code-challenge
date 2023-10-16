@@ -3,12 +3,11 @@ import InfiteScroll, {
   InfiniteScrollItemType,
 } from '../../components/infinite-scrool';
 import './style.css';
-import { useContext } from 'react';
 import {
   useBooksProvider,
 } from '../../contexts/Books';
-import { BookSelectionContext, IBooksSelectionContext } from '../../contexts/BooksSelection';
 import { apiBooksListRequest } from '../../api/books/list';
+import { useBooksSelectionProvider } from '../../contexts/BooksSelection';
 
 const BooksListPage: FC = (): ReactElement => {
   
@@ -36,7 +35,7 @@ const BooksListPage: FC = (): ReactElement => {
   const {
     getTotal: getTotalBooksSelected,
     clearSelection: clearBooksSelected
-  } = useContext(BookSelectionContext) as IBooksSelectionContext;
+  } = useBooksSelectionProvider();
 
   return (
     <section
