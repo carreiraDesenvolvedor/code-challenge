@@ -16,10 +16,12 @@ const InfiniteScroolBookItem = ({
   return (
     <div className="infinite-scroll-book-item-container">
       <div className="infinite-scroll-book-item-checkbox">
-        <input type="checkbox" onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          handleSelection(item.id, event.target.checked);
-        }}
-        checked={isBookSelected(item.id)}
+        <input 
+          type="checkbox" 
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            handleSelection(item.id, event.target.checked);
+          }}
+          checked={isBookSelected(item.id)}
         />
       </div>
       <div className="infinite-scroll-book-item-img">
