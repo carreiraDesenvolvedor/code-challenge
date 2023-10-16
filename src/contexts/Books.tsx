@@ -3,6 +3,7 @@ import {
   FC,
   createContext,
   useState,
+  useContext,
 } from 'react';
 import React, { ReactNode } from 'react';
 import {
@@ -23,12 +24,10 @@ export interface IBooksContext {
   setSuccessRequest: (list: IApiBookItem[]) => void;
   setLoading: (isLoading: boolean) => void;
 }
+
 interface IProvider {
   children: ReactNode;
 }
-
-export const BookContext: Context<IBooksContext | null> =
-  createContext<IBooksContext | null>(null);
 
 const emptyStateValues: IState = {
   request: {
@@ -37,6 +36,17 @@ const emptyStateValues: IState = {
     list: [],
   },
 };
+
+export const BookContext: Context<IBooksContext | null> =
+  createContext<IBooksContext | null>(null);
+
+export const useBooksProvider = () :IBooksContext => {
+  const contextValue = useContext(BookContext) as IBooksContext;
+  if(!contextValue){
+    throw new Error('useBooksProvider must be called from within an BooksContextProvider');
+  }
+  return contextValue;
+}
 
 const BooksProvider: FC<IProvider> = ({
   children,

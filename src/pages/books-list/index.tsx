@@ -5,8 +5,7 @@ import InfiteScroll, {
 import './style.css';
 import { useContext } from 'react';
 import {
-  BookContext,
-  IBooksContext,
+  useBooksProvider,
 } from '../../contexts/Books';
 import { BookSelectionContext, IBooksSelectionContext } from '../../contexts/BooksSelection';
 import { apiBooksListRequest } from '../../api/books/list';
@@ -17,7 +16,7 @@ const BooksListPage: FC = (): ReactElement => {
     values: { request },
     setSuccessRequest,
     setLoading
-  } = useContext(BookContext) as IBooksContext;
+  } = useBooksProvider();
 
   const fetchBooks = () => {
     if (request.isLoading) return false;
