@@ -1,5 +1,3 @@
-import { ApiEndpoints } from './endpoints';
-
 const makeRequest = (path: string, method: string) => {
   const URL = `${process.env.REACT_APP_API_URL}/${path}`;
   return fetch(URL, {
