@@ -46,7 +46,7 @@ const BooksListPage: FC = (): ReactElement => {
         <h1>Books</h1>
       </div>
       <div className='book-list-container-counter'>
-        <h3>{request.list.length}({getTotalBooksSelected()} selected)</h3>
+        <h3 data-testid='counter-title'>{request.list.length ?? 0}({getTotalBooksSelected()} selected)</h3>
         <div>
           <button disabled={getTotalBooksSelected() === 0} onClick={()=>clearBooksSelected()}>Clear Selection</button>
         </div>
